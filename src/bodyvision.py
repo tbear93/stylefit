@@ -1,31 +1,74 @@
 import cv2
 import mediapipe as mp
-
-# 1. MediaPipe 설정 (포즈 추출 모델)
+import numpy as np
+ 
+# 초기화
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.5)
+pose = mp_pose.Pose(min_detection_confidence=0.5,
+                    min_tracking_confidence=0.5)
 mp_drawing = mp.solutions.drawing_utils
-
-def analyze_body_ratio(image_path):
-    # 2. 이미지 로드
-    image = cv2.imread(image_path)
-    if image is None:
-        print("이미지를 찾을 수 없습니다.")
-        return
-
-    # 3. 신체 관절 추출
-    results = pose.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-
+ 
+cap = cv2.VideoCapture(0)
+ 
+while cap.isOpened():
+    success, frame = cap.read()
+    if not success:
+        break
+ 
+    # CLAHE 조명 보정
+    lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+    l, a, b_chan = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8,8))
+    l = clahe.apply(l)
+    frame_preprocessed = cv2.merge((l, a, b_chan))
+    frame_preprocessed = cv2.cvtColor(frame_preprocessed,
+                                      cv2.COLOR_LAB2BGR)
+ 
+    # Pose 처리
+    img_rgb = cv2.cvtColor(frame_preprocessed,
+                           cv2.COLOR_BGR2RGB)
+    results = pose.process(img_rgb)
+ 
     if results.pose_landmarks:
-        print("신체 좌표 추출 성공!")
-        # 여기에 체형 판정 알고리즘(수치 기반 Ratio)이 들어갈 예정입니다.
-        
-        # 샘플: 어깨 좌표 출력 (Landmark 11, 12)
-        left_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER]
-        right_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
-        print(f"왼쪽 어깨: {left_shoulder.x, left_shoulder.y}")
-    else:
-        print("신체 감지에 실패했습니다.")
-
-# 실행 예시 (나중에 실제 사진 경로로 변경)
-# analyze_body_ratio('data/sample_body.jpg')
+ 
+        mp_drawing.draw_landmarks(
+            frame,
+            results.pose_landmarks,
+            mp_pose.POSE_CONNECTIONS
+        )
+ 
+        lm = results.pose_landmarks.landmark
+ 
+        # 어깨 거리 계산
+        l_sh = lm[mp_pose.PoseLandmark.LEFT_SHOULDER]
+        r_sh = lm[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+ 
+        dist = np.sqrt(
+            (l_sh.x - r_sh.x)**2 +
+            (l_sh.y - r_sh.y)**2
+        )
+ 
+        cv2.putText(frame,
+                    f"Shoulder Dist: {round(dist, 2)}",
+                    (30, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1, (0, 255, 0), 2)
+ 
+        # 🔥 추가: 발 감지 체크
+        l_ankle = lm[mp_pose.PoseLandmark.LEFT_ANKLE]
+        r_ankle = lm[mp_pose.PoseLandmark.RIGHT_ANKLE]
+ 
+        if l_ankle.visibility < 0.5 or r_ankle.visibility < 0.5:
+            cv2.putText(frame,
+                        "Move Back - Show Full Body",
+                        (30, 70),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.8, (0, 0, 255), 3)
+ 
+    cv2.imshow('AI Vision Lab Test', frame)
+ 
+    if cv2.waitKey(5) & 0xFF == 27:
+        break
+ 
+cap.release()
+cv2.destroyAllWindows()
