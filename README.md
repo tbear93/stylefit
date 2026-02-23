@@ -1,21 +1,21 @@
-# 👔 StyleFit
-> **데이터로 찾는 인생 핏, AI 기반 남성 스타일링 엔진**
+👔 StyleFit: AI 기반 남성 퍼스널 스타일링 분석 엔진
+"데이터로 찾는 나만의 핏, 사진 한 장으로 완성되는 정밀 큐레이션"
+전문가의 안목을 데이터화하여 사용자의 체형과 컬러에 최적화된 스타일을 제안합니다.
 
----
+💡 Project Vision & Background
+기획 배경: 한국은 패션에 대한 기준과 안목이 매우 높아, 글로벌 어패럴 브랜드들이 한국인의 체형과 취향을 반영하기 위해 별도의 한국 지사를 운영할 만큼 중요한 시장입니다.
 
-### 🚀 핵심 요약
-* **Target**: 외모 관심도는 높지만 쇼핑은 번거로운 2040 한국 남성
-* **Problem**: 전문가 컨설팅 이후 '실행(구매)' 단계에서의 막막함
-* **Solution**: AI 골격 분석 + 퍼스널 컬러 기반의 'Stitch Fix' 모델
+기획 의도: 내가 어떤 옷을 입어야 좋을지를 잘 모르는 문제점과 전문가를 직접 찾아가야 하는 번거로움과 분석 이후 실제 제품을 찾아내기까지의 막막함을 기술적으로 해결하고자 합니다.
 
-### 🛠 Tech Stack
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+핵심 목표: 이미지 분석과 방대한 데이터 학습을 통해 전문가의 컨설팅을 디지털로 구현하여, 사용자에게 가장 잘 어울리는 스타일을 데이터로 증명하는 엔진을 개발합니다.
 
----
+🛠 Tech Stack
+📌 1차 프로젝트 핵심 엔진 (Core Engine)
+<details>
+<summary>🔍 상세 프로세스 보기 (클릭)</summary>
 
-### 📌 프로젝트 핵심 로직
-1. **정밀 데이터 추출**: 가이드라인 기반 이미지 촬영 및 오차 없는 수치 도출
-2. **유형화(Typology)**: 기존 남성 5대 체형 이론의 수치화(Ratio) 판정
-3. **매칭 알고리즘**: 체형별 보정 이론과 의류 실측 데이터를 결합한 큐레이션
+정밀 데이터 추출: 가이드라인 기반 이미지 촬영을 통해 오차 없는 신체 수치(골격 좌표) 및 피부톤 데이터 도출
+
+유형화(Typology): 기존 남성 5대 체형 이론을 수치(Ratio) 기반 판정 알고리즘으로 구현하여 전문가 수준의 진단 수행
+
+매칭 알고리즘: 체형 보정 이론과 의류 실측 데이터를 결합하여 사용자의 신체 조건에 최적화된 아이템 및 코디 제안
