@@ -50,8 +50,8 @@
 
 | 역할 | 담당자 | 핵심 업무 |
 | :--- | :--- | :--- |
-| **PM / AI Eng.** | **본인** | 전체 시스템 설계 및 데이터 파이프라인 규격화, Streamlit UI 구현 |
-| **Vision (Body)** | **현승,소현** | MediaPipe 활용 신체 관절 좌표 추출 및 실제 비율 수치화 |
+| **PM / AI Eng.** | **택근,나영** | 전체 시스템 설계 및 데이터 파이프라인 규격화, Streamlit UI 구현 |
+| **Vision (Body)** | **지현,택근** | MediaPipe 활용 신체 관절 좌표 추출 및 실제 비율 수치화 |
 | **Vision (Color)** | **현승,소현님** | OpenCV 기반 이미지 전처리 및 피부 영역(ROI) 분석 |
 | **ML & Cloud** | **C님** | Azure Custom Vision 학습 및 배포, ML Studio 모델 관리 |
 | **Data Eng.** | **D님** | 학습용 데이터셋 구축 및 브랜드별 의류 실측 데이터베이스 설계 |
