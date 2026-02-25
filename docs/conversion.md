@@ -10,8 +10,8 @@
 * **한계 극복**: AI가 인식하는 최상단점인 '코(Nose)'를 기준으로 삼을 경우 발생하는 키 손실을 보정합니다.
 * **7% 법칙**: 인체 해부학 통계에 따라 정수리부터 코까지의 길이를 전체 키의 7%로 간주합니다.
 * **환산 공식**:
-    * $$Available\_Height\_cm = User\_Height \times 0.93$$
-    * $$cm/px = Available\_Height\_cm \div |Nose\_y - Ankle\_y| \text{ (Pixel)}$$
+    * **Available_Height_cm** = User_Height × 0.93
+    * **cm/px** = Available_Height_cm / |Nose_y - Ankle_y| (Pixel)
 
 ---
 
